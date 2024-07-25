@@ -6,6 +6,11 @@ const noteSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   lastModified: { type: Date, default: Date.now },
   user: { type: Schema.Types.ObjectId, ref: "User" },
+  color: {
+    type: String,
+    enum: ["Yellow", "Green", "Pink", "Blue"],
+    default: "Yellow",
+  },
 });
 
 module.exports = model("Note", noteSchema);

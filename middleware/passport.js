@@ -11,13 +11,13 @@ const localStrategy = new LocalStrategy(
     try {
       const user = await User.findOne({ email: email });
       if (!user) {
-        return done(null, false), { message: "The email is wrong" };
+        return done(null, false, { message: "Wrong email" });
       }
 
       const comparePassword = await bcrypt.compare(password, user.password);
 
       if (!comparePassword) {
-        done(null, false), { message: "You entered a wrong email" };
+        return done(null, false, { message: "Wrong password" });
       }
       done(null, user);
     } catch (error) {

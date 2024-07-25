@@ -5,6 +5,7 @@ const {
   updateNote,
   deleteNote,
   getAllNotes,
+  getOneNote,
 } = require("./note.controllers");
 
 const router = express.Router();
@@ -26,5 +27,11 @@ router.get(
   "/note",
   passport.authenticate("jwt", { session: false }),
   getAllNotes
+);
+
+router.get(
+  "/note/:noteId",
+  passport.authenticate("jwt", { session: false }),
+  getOneNote
 );
 module.exports = router;

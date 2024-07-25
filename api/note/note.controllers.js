@@ -6,6 +6,7 @@ exports.newNote = async (req, res, next) => {
     const newNote = await Note.create({
       title: req.body.title,
       content: req.body.content,
+      color: req.body.color,
       user: req.user._id,
     });
 
@@ -34,6 +35,7 @@ exports.updateNote = async (req, res, next) => {
       {
         title: req.body.title,
         content: req.body.content,
+        color: req.body.color,
       }
     );
     res.status(200).json("The note has been updated");
@@ -69,6 +71,20 @@ exports.getAllNotes = async (req, res, next) => {
       return res.status(404).json("There are no available notes!");
     }
     res.status(200).json(notes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getOneNote = async (req, res, next) => {
+  try {
+    const { noteId } = req.params;
+    const existingNote = await Note.findById(noteId);
+    if (!existingNote) {
+      return res.status(404).json("This not is not existed!");
+    }
+
+    res.status(200).json(existingNote);
   } catch (error) {
     next(error);
   }
